@@ -1,0 +1,197 @@
+body {
+  font-family:
+    "Roboto",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
+  display: flow-root;
+  margin: auto;
+  padding: 0;
+  height: 100vh;
+  background: rgb(10, 25, 41);
+  /* background: #1b1b1d; */
+  color: rgb(227, 247, 255);
+}
+
+/* Main Area */
+.main {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.main header {
+  display: flow-root;
+}
+
+/* Main Menu */
+.main-menu {
+  /* min-height (not height) so long pages like Settings scroll instead of clipping */
+  min-height: 100%;
+  box-sizing: border-box;
+  padding: 1.5rem 16px;
+  max-width: 32rem;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.wide {
+  width: 100%;
+}
+
+.main-menu button {
+  padding: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Image Slide */
+.image-slider-area {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.image-slider-area #filename-container {
+  position: absolute;
+  padding: 4px 6px;
+  background: black;
+  border-radius: 3px;
+  opacity: 0.4;
+  font-size: 0.8rem;
+  word-break: break-all;
+  transition: opacity 0.5s;
+  z-index: 2;
+}
+
+@media (min-width: 1200px) {
+  .image-slider-area #filename-container {
+    font-size: 0.9rem;
+  }
+}
+
+.image-slider-area #filename-container:hover {
+  opacity: 1;
+}
+
+.image-slider-area #immersive-bg {
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: blur(28px);
+}
+
+.image-slider-area #image-container {
+  flex-grow: 2;
+  position: relative;
+  overflow: hidden;
+  /* Keeps the transition layers' z-index inside this box so they can't cover the controls */
+  isolation: isolate;
+}
+
+.image-slider-area #image-container .image-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.image-slider-area #image-container img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+/* Slideshow transitions; --transition-duration is set on #image-container */
+#image-container .image-layer.leaving {
+  z-index: 0;
+}
+
+#image-container .image-layer.entering {
+  z-index: 1;
+}
+
+.t-crossfade .image-layer.entering {
+  animation: fade-in var(--transition-duration) ease both;
+}
+
+.t-crossfade .image-layer.leaving {
+  animation: fade-out var(--transition-duration) ease both;
+}
+
+/* Old image fades to the background, then the new one fades in */
+.t-fade-black .image-layer.leaving {
+  animation: fade-out calc(var(--transition-duration) / 2) ease both;
+}
+
+.t-fade-black .image-layer.entering {
+  animation: fade-in calc(var(--transition-duration) / 2) ease
+    calc(var(--transition-duration) / 2) both;
+}
+
+.t-slide .image-layer.entering {
+  animation: slide-in var(--transition-duration) ease-out both;
+}
+
+.t-slide .image-layer.leaving {
+  animation: slide-out var(--transition-duration) ease-out both;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes slide-in {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slide-out {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+body.hide-cursor,
+body.hide-cursor * {
+  cursor: none !important;
+}
+
+.image-slider-area .image-controls {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  opacity: 0.6;
+  width: 80vw;
+  transition: opacity 0.5s;
+  z-index: 10;
+}
+
+.image-slider-area .image-controls:hover {
+  opacity: 1;
+}
+
+.image-slider-area .image-controls.idle {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.image-controls .button-container {
+  background-color: rgb(0, 0, 0, 0.7);
+  border-radius: 4px;
+}
+
+.dataset-creation-form > * {
+  margin-bottom: 0.5rem !important;
+}
